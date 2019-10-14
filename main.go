@@ -6,10 +6,6 @@ import (
 	s "strings"
 )
 
-func removeIndex(s []string, index int) []string {
-	return append(s[:index], s[index+1:]...)
-}
-
 // define function for sort string
 func sortVowels(sentence string) string {
 	vowels := []string{"a", "e", "i", "o", "u"}
