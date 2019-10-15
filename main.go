@@ -6,48 +6,45 @@ import (
 	s "strings"
 )
 
+func removeIndex(s []string, index int) []string {
+	return append(s[:index], s[index+1:]...)
+}
+
 // define function for sort string
 func sortVowels(sentence string) string {
-	vowels := []string{"a", "e", "i", "o", "u"}
-
 	// lowercase user input and then make them an slice
 	sLower := s.ToLower(sentence)
 	arrInput := s.Split(sLower, "")
 
 	// this var used to put the new vowels alphabet
-	newArr := []string{}
+	vowels := []string{}
 
 	//this var for notyfiying where index to delete the vowels alphabet
-	iVowels := []int{}
+	consonants := []string{}
 
-	// loop for add vowels to new aray
-	for i := 0; i < len(arrInput); i++ {
-		for v := 0; v < len(vowels); v++ {
-			if arrInput[i] == vowels[v] {
-				newArr = append(newArr, arrInput[i])
-				iVowels = append(iVowels, i)
-			}
+	for _, alphabet := range arrInput {
+		switch alphabet {
+		case "a", "i", "u", "e", "o":
+			vowels = append(vowels, alphabet)
+		default:
+			consonants = append(consonants, alphabet)
 		}
 	}
 
-	// loop for delete vowels alphabet so the array input includes all of consonant alpahabet
-	for j := 0; j < len(iVowels); j++ {
-		copy(arrInput[j:], arrInput[j+1:])
-		arrInput[len(arrInput)-1] = ""
-		arrInput = arrInput[:len(arrInput)-1]
-	}
-
 	// sort new array include vowels alphabet
-	sort.Strings(newArr)
+	sort.Strings(vowels)
 	// sort array input include consonant alphabet
-	sort.Strings(arrInput)
+	sort.Strings(consonants)
 	// merged two array one is vowels another is consonant and the join them
-	arrayMerged := append(newArr, arrInput...)
+	arrayMerged := append(vowels, consonants...)
 	output := s.Join(arrayMerged, "")
-	return output
+	return "Hasil sorting: " + output
 }
 
 func main() {
 	// implement the function
-	fmt.Println(sortVowels("osama"))
+	input := ""
+	fmt.Print("Masukkan Kata: ")
+	fmt.Scanln(&input)
+	fmt.Println(sortVowels(input))
 }
